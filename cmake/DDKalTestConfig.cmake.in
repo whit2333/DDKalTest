@@ -30,14 +30,14 @@ SET( DDKalTest_VERSION "@DDKalTest_VERSION@" )
 
 # ---------- include dirs -----------------------------------------------------
 # do not store find results in cache
-SET( DDKalTest_INCLUDE_DIRS DDKalTest_INCLUDE_DIRS-NOTFOUND )
+SET( DDKalTest_INCLUDE_DIRS ${CMAKE_INSTALL_PREFIX}/include/DDKalTest )
 MARK_AS_ADVANCED( DDKalTest_INCLUDE_DIRS )
 
-FIND_PATH( DDKalTest_INCLUDE_DIRS
-	NAMES DDKalTest/DDVMeasLayer.h
-	PATHS ${DDKalTest_ROOT}/include
-	NO_DEFAULT_PATH
-)
+#FIND_PATH( DDKalTest_INCLUDE_DIRS
+#	NAMES DDKalTest/DDVMeasLayer.h
+#	PATHS ${DDKalTest_ROOT}/include
+#	NO_DEFAULT_PATH
+#)
 
 # fix for backwards compatibility
 #IF( DDKalTest_INCLUDE_DIRS )
@@ -67,6 +67,6 @@ INCLUDE( "${DDKalTest_ROOT}/lib/cmake/DDKalTestLibDeps.cmake" )
 INCLUDE( FindPackageHandleStandardArgs )
 # set KALDET_FOUND to TRUE if all listed variables are TRUE and not empty
 # DDKalTest_COMPONENT_VARIABLES will be set if FIND_PACKAGE is called with REQUIRED argument
-FIND_PACKAGE_HANDLE_STANDARD_ARGS( DDKalTest DEFAULT_MSG DDKalTest_ROOT DDKalTest_INCLUDE_DIRS DDKalTest_LIBRARIES ${DDKalTest_COMPONENT_VARIABLES} )
+#FIND_PACKAGE_HANDLE_STANDARD_ARGS( DDKalTest DEFAULT_MSG DDKalTest_ROOT DDKalTest_INCLUDE_DIRS DDKalTest_LIBRARIES ${DDKalTest_COMPONENT_VARIABLES} )
 
 SET( DDKalTest_FOUND ${KALDET_FOUND} )

@@ -20,12 +20,12 @@ set(EXECUTABLE_OUTPUT_PATH ${PROJECT_BINARY_DIR}/bin)
 
 #------------- set the default installation directory to be the source directory
 
-IF(CMAKE_INSTALL_PREFIX_INITIALIZED_TO_DEFAULT)
-  SET( CMAKE_INSTALL_PREFIX ${CMAKE_SOURCE_DIR} CACHE PATH  
-    "install prefix path  - overwrite with -D CMAKE_INSTALL_PREFIX = ..." 
-    FORCE )
-  MESSAGE(STATUS "CMAKE_INSTALL_PREFIX is ${CMAKE_INSTALL_PREFIX} - overwrite with -D CMAKE_INSTALL_PREFIX" )
-ENDIF(CMAKE_INSTALL_PREFIX_INITIALIZED_TO_DEFAULT)
+#IF(CMAKE_INSTALL_PREFIX_INITIALIZED_TO_DEFAULT)
+#  SET( CMAKE_INSTALL_PREFIX ${CMAKE_SOURCE_DIR} CACHE PATH  
+#    "install prefix path  - overwrite with -D CMAKE_INSTALL_PREFIX = ..." 
+#    FORCE )
+#  MESSAGE(STATUS "CMAKE_INSTALL_PREFIX is ${CMAKE_INSTALL_PREFIX} - overwrite with -D CMAKE_INSTALL_PREFIX" )
+#ENDIF(CMAKE_INSTALL_PREFIX_INITIALIZED_TO_DEFAULT)
 
 #++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
@@ -34,13 +34,13 @@ find_package( DD4hep REQUIRED COMPONENTS DDRec )
 set(CMAKE_MODULE_PATH  ${CMAKE_MODULE_PATH}  ${DD4hep_ROOT}/cmake ) 
 include( DD4hep )
 
-find_package( ROOT REQUIRED )
-if ( ${ROOT_VERSION_MAJOR} GREATER 5 )
-  set( ROOT_COMPONENT_LIBRARIES Geom )
-else()
-  set( ROOT_COMPONENT_LIBRARIES Geom Reflex)
-endif()
-
+find_package( ROOT REQUIRED CONFIG)
+#if ( ${ROOT_VERSION_MAJOR} GREATER 5 )
+#  set( ROOT_COMPONENT_LIBRARIES Geom )
+#else()
+#  set( ROOT_COMPONENT_LIBRARIES Geom Reflex)
+#endif()
+include(${ROOT_USE_FILE})
 
 if(DD4HEP_USE_XERCESC)
   find_package(XercesC)
@@ -64,7 +64,7 @@ FIND_PACKAGE( ILCUTIL COMPONENTS ILCSOFT_CMAKE_MODULES streamlog REQUIRED )
 INCLUDE( ilcsoft_default_settings )
 
 FIND_PACKAGE( LCIO REQUIRED )
-FIND_PACKAGE( KalTest 1.5 REQUIRED )
+FIND_PACKAGE( KalTest REQUIRED )
 FIND_PACKAGE( streamlog REQUIRED )
 FIND_PACKAGE( aidaTT REQUIRED )
 FIND_PACKAGE( GSL REQUIRED )
@@ -83,7 +83,7 @@ FOREACH( pkg KalTest LCIO streamlog aidaTT GSL)
 
 ENDFOREACH()
 
-add_definitions( -D AIDATT_USE_DD4HEP ) 
+add_definitions( -DAIDATT_USE_DD4HEP ) 
 #-------------------------------------------------------------
 
 
@@ -126,9 +126,9 @@ install(FILES ${CMAKE_CURRENT_BINARY_DIR}/this${PackageName}.sh
 #--- install target-------------------------------------
 
 
-FILE(GLOB hfiles "ILD/include/*.h")
-INSTALL(FILES ${hfiles} 
-  DESTINATION include/${PackageName} 
+#FILE(GLOB hfiles "include/*.h")
+INSTALL(DIRECTORY include/DDKalTest
+  DESTINATION include/DDKalTest 
   )
 
 
